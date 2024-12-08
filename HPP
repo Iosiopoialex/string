@@ -1,0 +1,82 @@
+HPP
+#pragma once
+#include <cstddef>
+#include <iostream>
+#include <vector>
+#include <string>
+#ifndef STRING_HPP
+#define STRING_HPP
+
+class String {
+private:
+    char* data1_; // Указатель на динамически выделяемую память
+    size_t size1_; // Текущий размер строки
+    size_t capacity_; // Вместимость выделенной памяти
+
+    void Allocate(size_t newCapacity);
+    
+public:
+    // Конструктор по умолчанию
+    String();
+    
+    // Конструктор с размером и символом
+    String(size_t size1, char character);
+    
+    // Конструктор от const char*
+    String(const char* str);
+    
+    // Конструктор копирования
+    String(const String& other);
+    
+    // Оператор присваивания
+    String& operator=(const String& other);
+    
+    // Деструктор
+    ~String();
+    
+    void Clear();
+    void PushBack(char character);
+    void PopBack();
+    void Resize(size_t newSize);
+    void Resize(size_t newSize, char character);
+    void Reserve(size_t newCap);
+    void ShrinkToFit();
+    void Swap(String& other);
+
+    char& operator[](size_t index);
+    const char& operator[](size_t index) const;
+
+    char Front() const;
+    char Back() const;
+    
+    bool Empty() const;
+    size_t Size() const;
+    size_t Capacity() const;
+    const char* Data() const;
+
+    // Операторы сравнения
+    bool operator<(const String& other) const;
+    bool operator>(const String& other) const;
+    bool operator<=(const String& other) const;
+    bool operator>=(const String& other) const;
+    bool operator==(const String& other) const;
+    bool operator!=(const String& other) const;
+
+    // Операторы конкатенации
+    String operator+(const String& other) const;
+    String& operator+=(const String& other);
+    
+    // Оператор умножения на число
+    friend String operator*(const String& str, size_t n);
+
+    // Операторы ввода и вывода
+    friend std::ostream& operator<<(std::ostream& input, const String& str);
+    friend std::istream& operator>>(std::istream& output, String& str);
+
+    // Методы Split и Join
+    std::vector<String> Split(const String& delim = " ") const;
+    static String Join(const std::vector<String>& strings);
+};
+
+#endif // STRING_HPP
+
